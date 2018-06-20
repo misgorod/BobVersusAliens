@@ -7,13 +7,17 @@ using Zenject;
 public class PlayerShootHandler : IDisposable, IInitializable
 {
     IWeapon currentWeapon;
+
     PlayerShootSignal onPlayerShoot;
 
     IWeapon firstSlot;
     IWeapon secondSlot;
     IWeapon thirdSlot;
 
-    public PlayerShootHandler(PlayerShootSignal onPlayerShoot, 
+    ShootPosition shootPosition;
+
+    public PlayerShootHandler(PlayerShootSignal onPlayerShoot,
+        ShootPosition shootPosition,
         [Inject(Id = "first slot")]
         IWeapon firstSlot,
         [Inject(Id = "second slot")]
@@ -22,6 +26,8 @@ public class PlayerShootHandler : IDisposable, IInitializable
         IWeapon thirdSlot)
     {
         this.onPlayerShoot = onPlayerShoot;
+        this.shootPosition = shootPosition;
+
         this.firstSlot = firstSlot;
         this.secondSlot = secondSlot;
         this.thirdSlot = thirdSlot;
@@ -36,7 +42,9 @@ public class PlayerShootHandler : IDisposable, IInitializable
 	
     public void Shoot(Vector3 mousePosition)
     {
-        currentWeapon.Shoot(mousePosition);
+        currentWeapon.Shoot(
+            shootPosition.Position,
+            shootPosition.CalculateShootRotation(mousePosition));
     }
 
     public void ChangeWeapon(Weapons weapon)

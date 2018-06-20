@@ -6,7 +6,7 @@ using Zenject;
 public interface IWeapon
 {
     
-    void Shoot(Vector3 mousePosition);
+    void Shoot(Vector3 position, Quaternion rotation);
 
 }
 

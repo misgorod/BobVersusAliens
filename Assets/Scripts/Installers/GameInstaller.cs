@@ -46,9 +46,15 @@ public class GameInstaller : MonoInstaller<GameInstaller>
         }
 
         Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
-        Container.BindInterfacesTo<PlayerShootHandler>().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerShootHandler>().AsSingle();
 
         Container.DeclareSignal<PlayerShootSignal>();
+
+
+        Container.DeclareSignal<ChangeWeaponSignal>();
+
+        Container.BindInterfacesAndSelfTo<Controller>().AsSingle();
+
 
         Container.BindInterfacesTo<Pistol>().AsSingle();
         Container.BindInterfacesTo<Rifle>().AsSingle();

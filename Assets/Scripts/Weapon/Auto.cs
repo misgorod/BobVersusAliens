@@ -6,15 +6,13 @@ using Zenject;
 public class Auto : IWeapon, ITickable
 {
     private BulletHandler.Pool bulletPool;
-    private Player player;
     private Settings settings;
 
     private float timeSinceShoot;
 
-    public Auto(BulletHandler.Pool bulletPool, Player player, Settings settings)
+    public Auto(BulletHandler.Pool bulletPool, Settings settings)
     {
         this.bulletPool = bulletPool;
-        this.player = player;
         this.settings = settings;
 
         timeSinceShoot = 0;
@@ -25,27 +23,19 @@ public class Auto : IWeapon, ITickable
         timeSinceShoot += Time.deltaTime;
     }
 
-    public void Shoot(Vector3 mousePosition)
+    public void Shoot(Vector3 position, Quaternion rotation)
     {
         if (timeSinceShoot > settings.shootCooldown)
         {
             timeSinceShoot = 0;
 
             var bullet = bulletPool.Spawn(settings.damage, settings.speed, settings.lifeTime);
-            bullet.transform.position = player.Position;
-            bullet.transform.rotation = CalculateShootRotation(mousePosition);
+            bullet.transform.position = position;
+            bullet.transform.rotation = rotation;
         }
     }
 
-    private Quaternion CalculateShootRotation(Vector3 mousePosition)
-    {
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        mousePosition = player.transform.InverseTransformPoint(mousePosition);
-        mousePosition.z = 0;
-        mousePosition = mousePosition.normalized;
-        float tmp = Vector3.SignedAngle(Vector3.right, mousePosition, Vector3.forward);
-        return Quaternion.Euler(0, 0, tmp);
-    }
+    
 
     [System.Serializable]
     public class Settings

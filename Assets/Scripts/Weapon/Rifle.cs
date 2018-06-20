@@ -7,15 +7,13 @@ using Zenject;
 public class Rifle : IWeapon, ITickable
 {
     private BulletHandler.Pool bulletPool;
-    private Player player;
     private Settings settings;
 
     private float timeSinceShoot;
 
-    public Rifle(BulletHandler.Pool bulletPool, Player player, Settings settings)
+    public Rifle(BulletHandler.Pool bulletPool, Settings settings)
     {
         this.bulletPool = bulletPool;
-        this.player = player;
         this.settings = settings;
         timeSinceShoot = 0;
     }
@@ -25,29 +23,18 @@ public class Rifle : IWeapon, ITickable
         timeSinceShoot += Time.deltaTime;
     }
 
-    public void Shoot(Vector3 mousePosition)
+    public void Shoot(Vector3 position, Quaternion rotation)
     {
         if (timeSinceShoot > settings.shootCooldown)
         {
             timeSinceShoot = 0;
             for (int i = 0; i < settings.bulletCount; i++)
             {
-                Debug.Log(settings.speed);
                 var bullet = bulletPool.Spawn(settings.damage, settings.speed, settings.lifeTime);
-                bullet.transform.position = player.Position;
-                bullet.transform.rotation = CalculateShootRotation(mousePosition);
+                bullet.transform.position = position;
+                bullet.transform.rotation = rotation;
             }
         }
-    }
-
-    private Quaternion CalculateShootRotation(Vector3 mousePosition)
-    {
-        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        mousePosition = player.transform.InverseTransformPoint(mousePosition);
-        mousePosition.z = 0;
-        mousePosition = mousePosition.normalized;
-        float zAngle = Vector3.SignedAngle(Vector3.right, mousePosition, Vector3.forward) + Random.Range(-settings.spreadDegree, settings.spreadDegree);
-        return Quaternion.Euler(0, 0, zAngle);
     }
 
     [System.Serializable]
