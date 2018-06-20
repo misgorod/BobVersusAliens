@@ -30,3 +30,8 @@ MonoBehaviour:
       speed: 10
       shootCooldown: 1.5
       spreadDegree: 6
+    Auto:
+      damage: 1
+      lifeTime: 10
+      speed: 1
+      shootCooldown: 0.1

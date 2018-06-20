@@ -26,7 +26,7 @@ public class PlayerShootHandler : IDisposable, IInitializable
         this.secondSlot = secondSlot;
         this.thirdSlot = thirdSlot;
 
-        currentWeapon = firstSlot;
+        currentWeapon = thirdSlot;
     }
 
     public void Initialize()
@@ -37,6 +37,22 @@ public class PlayerShootHandler : IDisposable, IInitializable
     public void Shoot(Vector3 mousePosition)
     {
         currentWeapon.Shoot(mousePosition);
+    }
+
+    public void ChangeWeapon(Weapons weapon)
+    {
+        switch (weapon)
+        {
+            case Weapons.FirstSlot:
+                currentWeapon = firstSlot;
+                break;
+            case Weapons.SecondSlot:
+                currentWeapon = secondSlot;
+                break;
+            case Weapons.ThirdSlot:
+                currentWeapon = thirdSlot;
+                break;
+        }
     }
 
     public void Dispose()

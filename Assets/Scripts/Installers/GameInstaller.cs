@@ -34,6 +34,17 @@ public class GameInstaller : MonoInstaller<GameInstaller>
 
         }
 
+        switch (settings.thirdSlotWeapons)
+        {
+            case (ThirdSlotWeapons.Auto):
+                Container.Bind<IWeapon>().WithId("third slot").To<Auto>().AsSingle();
+                break;
+            default:
+                Container.Bind<IWeapon>().WithId("third slot").To<Auto>().AsSingle();
+                break;
+
+        }
+
         Container.BindInterfacesAndSelfTo<InputHandler>().AsSingle();
         Container.BindInterfacesTo<PlayerShootHandler>().AsSingle();
 
@@ -41,6 +52,7 @@ public class GameInstaller : MonoInstaller<GameInstaller>
 
         Container.BindInterfacesTo<Pistol>().AsSingle();
         Container.BindInterfacesTo<Rifle>().AsSingle();
+        Container.BindInterfacesTo<Auto>().AsSingle();
 
         Container.BindMemoryPool<BulletHandler, BulletHandler.Pool>().WithInitialSize(10).FromNewComponentOnNewPrefab(settings.bulletPrefab).UnderTransformGroup("Bullets");
     }

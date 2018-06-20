@@ -14,6 +14,7 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
     {
         public Pistol.Settings Pistol;
         public Rifle.Settings Rifle;
+        public Auto.Settings Auto;
     }
 
     public override void InstallBindings()
@@ -22,5 +23,6 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
 
         Container.BindInstance(Weapon.Pistol);
         Container.BindInstance(Weapon.Rifle);
+        Container.BindInstance(Weapon.Auto);
     }
 }

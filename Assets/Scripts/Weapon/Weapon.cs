@@ -10,6 +10,13 @@ public interface IWeapon
 
 }
 
+public enum Weapons
+{
+    FirstSlot,
+    SecondSlot,
+    ThirdSlot
+}
+
 public enum FirstSlotWeapons
 {
     Pistol
@@ -21,5 +28,6 @@ public enum SecondSlotWeapons
 }
 public enum ThirdSlotWeapons
 {
-
+    Auto
 }
+
