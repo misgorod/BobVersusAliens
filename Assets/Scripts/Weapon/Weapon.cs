@@ -8,6 +8,8 @@ public interface IWeapon
     
     void Shoot(Vector3 position, Quaternion rotation);
 
+    void Reload();
+
 }
 
 public enum Weapons
