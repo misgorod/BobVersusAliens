@@ -9,7 +9,7 @@ public class MainView : MonoBehaviour
     [SerializeField]
     private List<Image> weaponList;
 
-    private Dictionary<Weapons, Image> weaponImages;
+    private Dictionary<WeaponType, Image> weaponImages;
 
     private Image currentWeapon;
     private bool isReloading;
@@ -24,17 +24,17 @@ public class MainView : MonoBehaviour
     {
         Assert.IsTrue(weaponList.Count == 3);
 
-        weaponImages = new Dictionary<Weapons, Image>();
+        weaponImages = new Dictionary<WeaponType, Image>();
 
-        weaponImages.Add(Weapons.FirstSlot, weaponList[0]);
-        weaponImages.Add(Weapons.SecondSlot, weaponList[1]);
-        weaponImages.Add(Weapons.ThirdSlot, weaponList[2]);
+        weaponImages.Add(WeaponType.FirstSlot, weaponList[0]);
+        weaponImages.Add(WeaponType.SecondSlot, weaponList[1]);
+        weaponImages.Add(WeaponType.ThirdSlot, weaponList[2]);
 
-        currentWeapon = weaponImages[Weapons.FirstSlot];
+        currentWeapon = weaponImages[WeaponType.FirstSlot];
 
-        weaponImages[Weapons.FirstSlot].color = activeWeaponColor;
-        weaponImages[Weapons.SecondSlot].color = inActiveWeaponColor;
-        weaponImages[Weapons.ThirdSlot].color = inActiveWeaponColor;
+        weaponImages[WeaponType.FirstSlot].color = activeWeaponColor;
+        weaponImages[WeaponType.SecondSlot].color = inActiveWeaponColor;
+        weaponImages[WeaponType.ThirdSlot].color = inActiveWeaponColor;
     }
 
     private void Update()
@@ -57,20 +57,20 @@ public class MainView : MonoBehaviour
         }
     }
 
-    public void StartReload(Weapons weapon, float time)
+    public void StartReload(WeaponType weapon, float time)
     {
             isReloading = true;
             this.time = time;
             weaponImages[weapon].fillAmount = 0;
     }
 
-    public void StopReload(Weapons weapon)
+    public void StopReload(WeaponType weapon)
     {
             isReloading = false;
             weaponImages[weapon].fillAmount = 1;
     }
 
-    public void ChangeWeaponImages(Weapons weapon)
+    public void ChangeWeaponImages(WeaponType weapon)
     {
         foreach (var image in weaponImages)
         {

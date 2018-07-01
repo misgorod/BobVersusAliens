@@ -8,7 +8,7 @@ using Zenject;
 public class ButtonWeapon : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField]
-    private Weapons weapon;
+    private WeaponType weapon;
     [Inject]
     private ChangeWeaponSignal onChangeWeapon;
 

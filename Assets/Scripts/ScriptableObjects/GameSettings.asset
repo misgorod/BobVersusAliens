@@ -18,29 +18,37 @@ MonoBehaviour:
     bulletPrefab: {fileID: 1784772418433950, guid: 00dfae5f8c76d37429cd33b5d28ae9c5,
       type: 2}
   Weapon:
-    Pistol:
+    Settings:
+    - weaponName: Pistol
       weaponType: 0
+      reloadType: 0
       bulletDamage: 1
-      bulletLifeTime: 2
-      bulletSpeed: 10
-      bulletsInCollar: 6
-      shootCooldown: 0.5
-      reloadCooldown: 2
-    Rifle:
+      bulletLifeTime: 1
+      bulletSpeed: 1
+      bulletsPerShot: 1
+      bulletsInCollar: 1
+      shootCooldown: 1
+      reloadCooldown: 1
+      spreadDegree: 1
+    - weaponName: Shotgun
       weaponType: 1
-      bulletDamage: 0
-      bulletLifeTime: 0
-      bulletSpeed: 0
-      bulletsPerShot: 0
-      bulletsInCollar: 0
-      shootCooldown: 1.5
-      reloadCooldown: 0
-      spreadDegree: 6
-    Auto:
+      reloadType: 1
+      bulletDamage: 1
+      bulletLifeTime: 1
+      bulletSpeed: 1
+      bulletsPerShot: 1
+      bulletsInCollar: 1
+      shootCooldown: 1
+      reloadCooldown: 1
+      spreadDegree: 1
+    - weaponName: Auto
       weaponType: 2
-      bulletDamage: 0
-      bulletLifeTime: 0
-      bulletSpeed: 0
-      bulletsInCollar: 0
-      shootCooldown: 0.1
-      reloadCooldown: 0
+      reloadType: 0
+      bulletDamage: 1
+      bulletLifeTime: 1
+      bulletSpeed: 1
+      bulletsPerShot: 1
+      bulletsInCollar: 1
+      shootCooldown: 1
+      reloadCooldown: 1
+      spreadDegree: 1

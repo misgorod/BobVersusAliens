@@ -12,17 +12,34 @@ public class GameSettingsInstaller : ScriptableObjectInstaller<GameSettingsInsta
     [System.Serializable]
     public class WeaponSettings
     {
-        public Pistol.Settings Pistol;
-        public Rifle.Settings Rifle;
-        public Auto.Settings Auto;
+        public List<Weapon.Settings> Settings;
     }
 
     public override void InstallBindings()
     {
         Container.BindInstance(GameInstaller);
+        BindWeaponSettings();
+    }
 
-        Container.BindInstance(Weapon.Pistol);
-        Container.BindInstance(Weapon.Rifle);
-        Container.BindInstance(Weapon.Auto);
+    private void BindWeaponSettings()
+    {
+        foreach (var weapon in Weapon.Settings)
+        {
+            if (weapon.weaponName == GameInstaller.firstSlotWeapons.ToString())
+            {
+                Container.Bind<Weapon>().WithId("first slot").WithArguments<Weapon.Settings>(weapon).WhenInjectedInto<PlayerShootHandler>();
+            }
+
+            if (weapon.weaponName == GameInstaller.secondSlotWeapons.ToString())
+            {
+                Container.Bind<Weapon>().WithId("second slot").WithArguments<Weapon.Settings>(weapon).WhenInjectedInto<PlayerShootHandler>();
+            }
+
+            if (weapon.weaponName == GameInstaller.thirdSlotWeapons.ToString())
+            {
+                Container.Bind<Weapon>().WithId("third slot").WithArguments<Weapon.Settings>(weapon).WhenInjectedInto<PlayerShootHandler>();
+            }
+        }
+
     }
 }

@@ -4,27 +4,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class PlayerShootHandler : IDisposable, IInitializable
+public class PlayerShootHandler : IDisposable, IInitializable, ITickable
 {
-    IWeapon currentWeapon;
+    private Weapon currentWeapon;
 
-    PlayerShootSignal onPlayerShoot;
-    ChangeWeaponSignal onWeaponChange;
+    private PlayerShootSignal onPlayerShoot;
+    private ChangeWeaponSignal onWeaponChange;
 
-    IWeapon firstSlot;
-    IWeapon secondSlot;
-    IWeapon thirdSlot;
+    private Weapon firstSlot;
+    private Weapon secondSlot;
+    private Weapon thirdSlot;
 
-    ShootPosition shootPosition;
+    private ShootPosition shootPosition;
 
     public PlayerShootHandler(PlayerShootSignal onPlayerShoot, ChangeWeaponSignal onWeaponChange,
         ShootPosition shootPosition,
         [Inject(Id = "first slot")]
-        IWeapon firstSlot,
+        Weapon firstSlot,
         [Inject(Id = "second slot")]
-        IWeapon secondSlot,
+        Weapon secondSlot,
         [Inject(Id = "third slot")]
-        IWeapon thirdSlot)
+        Weapon thirdSlot)
     {
         this.onPlayerShoot = onPlayerShoot;
         this.onWeaponChange = onWeaponChange;
@@ -34,13 +34,22 @@ public class PlayerShootHandler : IDisposable, IInitializable
         this.secondSlot = secondSlot;
         this.thirdSlot = thirdSlot;
 
-        currentWeapon = firstSlot;
+
     }
 
     public void Initialize()
     {
         onPlayerShoot.Listen(Shoot);
         onWeaponChange.Listen(ChangeWeapon);
+
+        currentWeapon = firstSlot;
+    }
+
+    public void Tick()
+    {
+        firstSlot.Tick();
+        secondSlot.Tick();
+        thirdSlot.Tick();
     }
 	
     public void Shoot(Vector3 mousePosition)
@@ -50,17 +59,17 @@ public class PlayerShootHandler : IDisposable, IInitializable
             shootPosition.CalculateShootRotation(mousePosition));
     }
 
-    public void ChangeWeapon(Weapons weapon)
+    public void ChangeWeapon(WeaponType weapon)
     {
         switch (weapon)
         {
-            case Weapons.FirstSlot:
+            case WeaponType.FirstSlot:
                 currentWeapon = firstSlot;
                 break;
-            case Weapons.SecondSlot:
+            case WeaponType.SecondSlot:
                 currentWeapon = secondSlot;
                 break;
-            case Weapons.ThirdSlot:
+            case WeaponType.ThirdSlot:
                 currentWeapon = thirdSlot;
                 break;
         }
