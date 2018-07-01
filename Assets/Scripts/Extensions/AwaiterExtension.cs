@@ -7,8 +7,8 @@ using UnityEngine;
 
 public static class AwaiterExtension
 {
-    public static TaskAwaiter GetAwaiter(this WaitForSeconds waitForSeconds)
-    {
-        return Task.
-    }
+    //public static TaskAwaiter GetAwaiter(this WaitForSeconds waitForSeconds)
+    //{
+        
+    //}
 }

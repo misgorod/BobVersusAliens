@@ -2149,7 +2149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdcafc0bb2976f438c2b36ea43073ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponImages:
+  weaponList:
   - {fileID: 58486976}
   - {fileID: 1620803178}
   - {fileID: 1173604974}

@@ -19,19 +19,28 @@ MonoBehaviour:
       type: 2}
   Weapon:
     Pistol:
-      damage: 1
-      lifeTime: 3
-      speed: 10
+      weaponType: 0
+      bulletDamage: 1
+      bulletLifeTime: 2
+      bulletSpeed: 10
+      bulletsInCollar: 6
       shootCooldown: 0.5
+      reloadCooldown: 2
     Rifle:
-      damage: 1
-      bulletCount: 3
-      lifeTime: 3
-      speed: 10
+      weaponType: 1
+      bulletDamage: 0
+      bulletLifeTime: 0
+      bulletSpeed: 0
+      bulletsPerShot: 0
+      bulletsInCollar: 0
       shootCooldown: 1.5
+      reloadCooldown: 0
       spreadDegree: 6
     Auto:
-      damage: 1
-      lifeTime: 10
-      speed: 1
+      weaponType: 2
+      bulletDamage: 0
+      bulletLifeTime: 0
+      bulletSpeed: 0
+      bulletsInCollar: 0
       shootCooldown: 0.1
+      reloadCooldown: 0

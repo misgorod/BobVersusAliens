@@ -52,6 +52,8 @@ public class GameInstaller : MonoInstaller<GameInstaller>
 
 
         Container.DeclareSignal<ChangeWeaponSignal>();
+        Container.DeclareSignal<ReloadWeaponSignal>();
+        Container.DeclareSignal<StopReloadWeaponSignal>();
 
         Container.BindInterfacesAndSelfTo<Controller>().AsSingle();
 

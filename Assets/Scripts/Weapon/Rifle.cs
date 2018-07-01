@@ -55,6 +55,8 @@ public class Rifle : IWeapon, ITickable
     [System.Serializable]
     public class Settings
     {
+        public Weapons weaponType;
+
         public float bulletDamage;
         public float bulletLifeTime;
         public float bulletSpeed;

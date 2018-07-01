@@ -7,37 +7,31 @@ using Zenject;
 public class Controller : IInitializable, IDisposable
 {
 
-    MainView view;
+    private MainView view;
 
-    PlayerShootHandler playerShootHandler;
+    private ChangeWeaponSignal changeWeaponSignal;
+    private ReloadWeaponSignal onWeaponReload;
+    private StopReloadWeaponSignal onWeaponStopReload;
 
-    ChangeWeaponSignal changeWeaponSignal;
-
-    public Controller(MainView view, PlayerShootHandler playerShootHandler, ChangeWeaponSignal changeWeaponSignal)
+    public Controller(MainView view, ChangeWeaponSignal changeWeaponSignal, ReloadWeaponSignal onWeaponReload, StopReloadWeaponSignal onWeaponStopReload)
     {
         this.view = view;
-        this.playerShootHandler = playerShootHandler;
         this.changeWeaponSignal = changeWeaponSignal;
+        this.onWeaponReload = onWeaponReload;
+        this.onWeaponStopReload = onWeaponStopReload;
     }
 
     public void Initialize()
     {
-        changeWeaponSignal.Listen(ChangeWeapon);
-    }
-
-    public void ChangeWeapon(Weapons weapon)
-    {
-        playerShootHandler.ChangeWeapon(weapon);
-        view.ChangeWeaponImages(weapon);
-    }
-
-    public void Foo()
-    {
-
+        changeWeaponSignal.Listen(view.ChangeWeaponImages);
+        onWeaponReload.Listen(view.StartReload);
+        onWeaponStopReload.Listen(view.StopReload);
     }
 
     public void Dispose()
     {
-        changeWeaponSignal.Unlisten(ChangeWeapon);
+        changeWeaponSignal.Unlisten(view.ChangeWeaponImages);
+        onWeaponReload.Unlisten(view.StartReload);
+        onWeaponStopReload.Unlisten(view.StopReload);
     }
 }
