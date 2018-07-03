@@ -43,13 +43,15 @@ public class PlayerShootHandler : IDisposable, IInitializable, ITickable
         onWeaponChange.Listen(ChangeWeapon);
 
         currentWeapon = firstSlot;
+
+        firstSlot.Initialize();
+        secondSlot.Initialize();
+        thirdSlot.Initialize();
     }
 
     public void Tick()
     {
-        firstSlot.Tick();
-        secondSlot.Tick();
-        thirdSlot.Tick();
+        currentWeapon.Tick();
     }
 	
     public void Shoot(Vector3 mousePosition)
@@ -61,6 +63,7 @@ public class PlayerShootHandler : IDisposable, IInitializable, ITickable
 
     public void ChangeWeapon(WeaponType weapon)
     {
+        currentWeapon.CancelReload();
         switch (weapon)
         {
             case WeaponType.FirstSlot:

@@ -23,13 +23,13 @@ MonoBehaviour:
       weaponType: 0
       reloadType: 0
       bulletDamage: 1
-      bulletLifeTime: 1
-      bulletSpeed: 1
+      bulletLifeTime: 7
+      bulletSpeed: 3
       bulletsPerShot: 1
-      bulletsInCollar: 1
-      shootCooldown: 1
-      reloadCooldown: 1
-      spreadDegree: 1
+      bulletsInCollar: 6
+      shootCooldown: 0.5
+      reloadCooldown: 2
+      spreadDegree: 0
     - weaponName: Shotgun
       weaponType: 1
       reloadType: 1

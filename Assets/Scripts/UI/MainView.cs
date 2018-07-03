@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
+using TMPro;
 
 public class MainView : MonoBehaviour
 {
     [SerializeField]
-    private List<Image> weaponList;
+    private List<Image> weaponImagesList;
+
+    [SerializeField]
+    private List<TextMeshProUGUI> weaponAmmoList;
 
     private Dictionary<WeaponType, Image> weaponImages;
+    private Dictionary<WeaponType, TextMeshProUGUI> weaponAmmo;
 
     private Image currentWeapon;
     private bool isReloading;
@@ -20,15 +25,22 @@ public class MainView : MonoBehaviour
     [SerializeField]
     private Color32 inActiveWeaponColor;
 
-    private void Start()
+    private void Awake()
     {
-        Assert.IsTrue(weaponList.Count == 3);
+        Assert.IsTrue(weaponImagesList.Count == 3);
+        Assert.IsTrue(weaponAmmoList.Count == 3);
 
         weaponImages = new Dictionary<WeaponType, Image>();
 
-        weaponImages.Add(WeaponType.FirstSlot, weaponList[0]);
-        weaponImages.Add(WeaponType.SecondSlot, weaponList[1]);
-        weaponImages.Add(WeaponType.ThirdSlot, weaponList[2]);
+        weaponImages.Add(WeaponType.FirstSlot, weaponImagesList[0]);
+        weaponImages.Add(WeaponType.SecondSlot, weaponImagesList[1]);
+        weaponImages.Add(WeaponType.ThirdSlot, weaponImagesList[2]);
+
+        weaponAmmo = new Dictionary<WeaponType, TextMeshProUGUI>();
+
+        weaponAmmo.Add(WeaponType.FirstSlot, weaponAmmoList[0]);
+        weaponAmmo.Add(WeaponType.SecondSlot, weaponAmmoList[1]);
+        weaponAmmo.Add(WeaponType.ThirdSlot, weaponAmmoList[2]);
 
         currentWeapon = weaponImages[WeaponType.FirstSlot];
 
@@ -82,6 +94,11 @@ public class MainView : MonoBehaviour
         StopReload(weapon);
 
         currentWeapon = weaponImages[weapon];
+    }
+
+    public void ChangeAmmo(WeaponType weapon, int ammo)
+    {
+        weaponAmmo[weapon].text = ammo.ToString();
     }
 
 }

@@ -31,10 +31,11 @@ public enum ReloadType
     OneBullet
 }
 
-public class Weapon : ITickable//, IInitializable
+public class Weapon : ITickable, IInitializable
 {
     protected ReloadWeaponSignal onWeaponReload;
     protected StopReloadWeaponSignal onStopReload;
+    protected BulletChangeSignal onBulletChange;
 
     protected BulletHandler.Pool bulletPool;
     protected Settings settings;
@@ -46,10 +47,11 @@ public class Weapon : ITickable//, IInitializable
 
     protected CancellationTokenSource reloadCancellatonToken;
 
-    public Weapon(ReloadWeaponSignal onWeaponReload, StopReloadWeaponSignal onStopReload, BulletHandler.Pool bulletPool, Settings settings)
+    public Weapon(ReloadWeaponSignal onWeaponReload, StopReloadWeaponSignal onStopReload, BulletChangeSignal onBulletChange, BulletHandler.Pool bulletPool, Settings settings)
     {
         this.onWeaponReload = onWeaponReload;
         this.onStopReload = onStopReload;
+        this.onBulletChange = onBulletChange;
         this.bulletPool = bulletPool;
         this.settings = settings;
 
@@ -61,14 +63,14 @@ public class Weapon : ITickable//, IInitializable
 
     public virtual void Initialize()
     {
-        
+        onBulletChange.Fire(settings.weaponType, bullets);
     }
 
     public virtual void Tick()
     {
         timeSinceShoot += Time.deltaTime;
 
-        if ((timeSinceShoot > 4 && settings.bulletsInCollar > bullets && !isReloading) || ((bullets == 0) && !isReloading))
+        if ((timeSinceShoot > 1.5f && settings.bulletsInCollar > bullets && !isReloading) || ((bullets == 0) && !isReloading))
         {
             Reload();
         }
@@ -81,6 +83,7 @@ public class Weapon : ITickable//, IInitializable
             CancelReload();
 
             bullets--;
+            onBulletChange.Fire(settings.weaponType, bullets);
             timeSinceShoot = 0;
 
             for (int i = 0; i < settings.bulletsPerShot; i++)
@@ -111,7 +114,8 @@ public class Weapon : ITickable//, IInitializable
                     bullets++;
                     break;
             }
-            
+            onBulletChange.Fire(settings.weaponType, bullets);
+
         }
         catch (TaskCanceledException tce)
         {
@@ -123,7 +127,7 @@ public class Weapon : ITickable//, IInitializable
         }
     }
 
-    protected virtual void CancelReload()
+    public virtual void CancelReload()
     {
         onStopReload.Fire(settings.weaponType);
 
