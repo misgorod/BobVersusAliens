@@ -4,19 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Assertions;
 using TMPro;
+using RotaryHeart.Lib.SerializableDictionary;
 
 public class MainView : MonoBehaviour
 {
     [SerializeField]
-    private List<Image> weaponImagesList;
+    private WeaponImageAmmoDictionary weaponInfo;
 
-    [SerializeField]
-    private List<TextMeshProUGUI> weaponAmmoList;
-
-    private Dictionary<WeaponType, Image> weaponImages;
-    private Dictionary<WeaponType, TextMeshProUGUI> weaponAmmo;
-
-    private Image currentWeapon;
+    private Image currentWeaponImage;
     private bool isReloading;
     private float time;
 
@@ -27,26 +22,13 @@ public class MainView : MonoBehaviour
 
     private void Awake()
     {
-        Assert.IsTrue(weaponImagesList.Count == 3);
-        Assert.IsTrue(weaponAmmoList.Count == 3);
+        Assert.IsTrue(weaponInfo.Count == 3);
 
-        weaponImages = new Dictionary<WeaponType, Image>();
+        currentWeaponImage = weaponInfo[WeaponType.FirstSlot].Image;
 
-        weaponImages.Add(WeaponType.FirstSlot, weaponImagesList[0]);
-        weaponImages.Add(WeaponType.SecondSlot, weaponImagesList[1]);
-        weaponImages.Add(WeaponType.ThirdSlot, weaponImagesList[2]);
-
-        weaponAmmo = new Dictionary<WeaponType, TextMeshProUGUI>();
-
-        weaponAmmo.Add(WeaponType.FirstSlot, weaponAmmoList[0]);
-        weaponAmmo.Add(WeaponType.SecondSlot, weaponAmmoList[1]);
-        weaponAmmo.Add(WeaponType.ThirdSlot, weaponAmmoList[2]);
-
-        currentWeapon = weaponImages[WeaponType.FirstSlot];
-
-        weaponImages[WeaponType.FirstSlot].color = activeWeaponColor;
-        weaponImages[WeaponType.SecondSlot].color = inActiveWeaponColor;
-        weaponImages[WeaponType.ThirdSlot].color = inActiveWeaponColor;
+        weaponInfo[WeaponType.FirstSlot].Image.color = activeWeaponColor;
+        weaponInfo[WeaponType.SecondSlot].Image.color = inActiveWeaponColor;
+        weaponInfo[WeaponType.ThirdSlot].Image.color = inActiveWeaponColor;
     }
 
     private void Update()
@@ -59,9 +41,9 @@ public class MainView : MonoBehaviour
 
     private void Reload()
     {
-        if (currentWeapon.fillAmount < 1)
+        if (currentWeaponImage.fillAmount < 1)
         {
-            currentWeapon.fillAmount += Time.deltaTime / time;
+            currentWeaponImage.fillAmount += Time.deltaTime / time;
         }
         else
         {
@@ -71,34 +53,50 @@ public class MainView : MonoBehaviour
 
     public void StartReload(WeaponType weapon, float time)
     {
-            isReloading = true;
-            this.time = time;
-            weaponImages[weapon].fillAmount = 0;
+        isReloading = true;
+        this.time = time;
+        weaponInfo[weapon].Image.fillAmount = 0;
     }
 
     public void StopReload(WeaponType weapon)
     {
-            isReloading = false;
-            weaponImages[weapon].fillAmount = 1;
+        isReloading = false;
+        weaponInfo[weapon].Image.fillAmount = 1;
     }
 
     public void ChangeWeaponImages(WeaponType weapon)
     {
-        foreach (var image in weaponImages)
+        foreach (var info in weaponInfo.Values)
         {
-            image.Value.color = inActiveWeaponColor;
-            image.Value.fillAmount = 1;
+            info.Image.color = inActiveWeaponColor;
+            info.Image.fillAmount = 1;
         }
-        weaponImages[weapon].color = activeWeaponColor;
+        weaponInfo[weapon].Image.color = activeWeaponColor;
 
         StopReload(weapon);
 
-        currentWeapon = weaponImages[weapon];
+        currentWeaponImage = weaponInfo[weapon].Image;
     }
 
     public void ChangeAmmo(WeaponType weapon, int ammo)
     {
-        weaponAmmo[weapon].text = ammo.ToString();
+        weaponInfo[weapon].Text.text = ammo.ToString();
     }
 
+    [System.Serializable]
+    public class ImageAmmo
+    {
+        public Image Image;
+        public TextMeshProUGUI Text;
+    }
+
+    [System.Serializable]
+    public class WeaponImageAmmoDictionary : SerializableDictionaryBase<WeaponType, ImageAmmo>
+    {
+
+    }
 }
+
+
+
+

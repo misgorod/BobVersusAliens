@@ -2067,14 +2067,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcdcafc0bb2976f438c2b36ea43073ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponImagesList:
-  - {fileID: 58486976}
-  - {fileID: 1620803178}
-  - {fileID: 1173604974}
-  weaponAmmoList:
-  - {fileID: 563868936}
-  - {fileID: 1360014175}
-  - {fileID: 1547827683}
+  weaponInfo:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      label:
+        m_Text: Key Values
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    _keyValues: 000000000100000002000000
+    _keys: 000000000100000002000000
+    _values:
+    - Image: {fileID: 58486976}
+      Text: {fileID: 563868936}
+    - Image: {fileID: 1620803178}
+      Text: {fileID: 1360014175}
+    - Image: {fileID: 1173604974}
+      Text: {fileID: 1547827683}
   activeWeaponColor:
     serializedVersion: 2
     rgba: 4294967295
